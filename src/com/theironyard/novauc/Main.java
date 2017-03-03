@@ -12,29 +12,29 @@ import java.util.HashMap;
 public class Main {
 
     static HashMap<String, User> users = new HashMap<>();
+    static ArrayList<Form> messages = new ArrayList<>();
 
     public static void main(String[] args) {
         Spark.init();
 
 
+
         Spark.get("/", ((request, response) -> {
+                    HashMap m = new HashMap();
                     Session session = request.session();
                     String name = session.attribute("userName");
                     User user = users.get(name);
 
-//
-                  HashMap m = new HashMap();
+
+
                     if (user == null) {
                         return new ModelAndView(m, "index.html");
-
                     } else {
                         m.put("name", user.name);
                         return new ModelAndView(m, "home.html");
                     }
-
-                }), new MustacheTemplateEngine()
-
-
+                }),
+                new MustacheTemplateEngine()
         );
 
 
